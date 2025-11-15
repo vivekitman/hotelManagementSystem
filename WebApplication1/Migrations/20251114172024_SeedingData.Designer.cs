@@ -9,8 +9,8 @@ using WebApplication1.Data;
 namespace WebApplication1.Migrations
 {
     [DbContext(typeof(DetaBaseCountext))]
-    [Migration("20251114155259_DAtabaseCreation")]
-    partial class DAtabaseCreation
+    [Migration("20251114172024_SeedingData")]
+    partial class SeedingData
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -39,6 +39,26 @@ namespace WebApplication1.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Countries");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CountryName = "Jordon",
+                            ShortName = "JOR"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CountryName = "Kuwait",
+                            ShortName = "KUW"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CountryName = "Bahrain",
+                            ShortName = "BAH"
+                        });
                 });
 
             modelBuilder.Entity("WebApplication1.Data.Hotelcs", b =>
@@ -71,6 +91,32 @@ namespace WebApplication1.Migrations
                     b.HasIndex("CountryId");
 
                     b.ToTable("Hotels");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "Amman",
+                            CountryId = 1,
+                            HotelName = "Kempinski",
+                            Rating = 5.0
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Address = "Kuwait City",
+                            CountryId = 2,
+                            HotelName = "Jumeirah",
+                            Rating = 4.5
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Address = "Manama",
+                            CountryId = 3,
+                            HotelName = "Gulf Hotel",
+                            Rating = 4.0
+                        });
                 });
 
             modelBuilder.Entity("WebApplication1.Data.Hotelcs", b =>
