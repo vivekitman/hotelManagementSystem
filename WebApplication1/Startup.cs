@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApplication1.Data;
+using WebApplication1.IRepository;
+using WebApplication1.Repository;
 
 namespace WebApplication1
 {
@@ -28,6 +30,8 @@ namespace WebApplication1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+         
+
             services.AddDbContext<DetaBaseCountext>(options =>options.UseSqlServer(Configuration.GetConnectionString("SQlconnection")) );
 
             services.AddControllers();

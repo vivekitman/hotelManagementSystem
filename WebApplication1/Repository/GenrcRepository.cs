@@ -11,25 +11,21 @@ namespace WebApplication1.Repository
 {
     public class GenrcRepository<T> : IGenericRepository<T> where T : class
     {
-
         private readonly DetaBaseCountext _context;
         private readonly DbSet<T> _db;
-
-        public GenrcRepository(DetaBaseCountext context)
+        
+        public GenrcRepository(DetaBaseCountext countext) 
         {
-            _context = context;
-            _db = _context.Set<T>();
+            _context = countext;
+            _db =  _context.Set<T>();
         }
         public async Task Delete(int id)
         {
             var entity = await _db.FindAsync(id);
-            _db.Remove(entity);
+            _db.Remove(entity); 
+        }
 
-        }
-        public void DeleteRange(IEnumerable<T> entities)
-        {
-            _db.RemoveRange(entities);
-        }
+     
 
         public async Task<T> Get(Expression<Func<T, bool>> expression, List<string> include = null)
         {
@@ -41,47 +37,51 @@ namespace WebApplication1.Repository
                     query = query.Include(includeProperty);
                 }
             }
-            query = query.Where(expression);
             return await query.AsNoTracking().FirstOrDefaultAsync(expression);
-        }
-
+           }
         public async Task<IList<T>> GetAll(Expression<Func<T, bool>> expression = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderby = null, List<string> include = null)
         {
             IQueryable<T> query = _db;
+
             if (expression != null)
             {
                 query = query.Where(expression);
             }
-            if (include != null)
+            if(include != null)
             {
                 foreach (var includeProperty in include)
-                {
-                    query = query.Include(includeProperty);
+                { query = query.Include(includeProperty);
                 }
+
             }
             if (orderby != null)
             {
                 query = orderby(query);
             }
-
             return await query.AsNoTracking().ToListAsync();
         }
 
-
-         public async Task insert(T entity)
+        public async Task Insert(T entity)
         {
             await _db.AddAsync(entity);
-
-
         }
+
         public async Task InsertRange(IEnumerable<T> entities)
         {
             await _db.AddRangeAsync(entities);
         }
+
         public void Update(T entity)
         {
-            _db.Attach(entity);
+             _db.Attach(entity);
             _context.Entry(entity).State = EntityState.Modified;
         }
-    } 
+
+        public void DeleteRange(IEnumerable<T> entities)
+        {
+            _db.RemoveRange(entities);
+        }
+
+        
+    }
 }

@@ -15,8 +15,8 @@ namespace WebApplication1.IRepository
         Task<T> Get(Expression<Func<T, bool>> expression, List<string> include = null); 
         Task Insert(T entity); 
         Task InsertRange(IEnumerable<T> entities); 
-        Task Delete(int id); 
-        Task DeleteRange(IEnumerable<T> entities); 
+        Task Delete(int id);
+        void DeleteRange(IEnumerable<T> entities);
         void Update(T entity);
     }
 }
