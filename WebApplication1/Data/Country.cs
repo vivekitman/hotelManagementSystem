@@ -1,4 +1,6 @@
-﻿namespace WebApplication1.Data
+﻿using System.Collections.Generic;
+
+namespace WebApplication1.Data
 {
     public class Country
     {
@@ -7,9 +9,9 @@
         public string CountryName { get; set; }
         public string ShortName { get; set; }
         public string CountryCode { get; set; }
-        
-        
-         
+         public  virtual  IList <Hotelcs> Hotels { get; set; }
+
+
 
     }
 }

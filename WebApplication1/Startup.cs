@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApplication1.Configurations;
 using WebApplication1.Data;
 using WebApplication1.IRepository;
 using WebApplication1.Repository;
@@ -33,6 +35,10 @@ namespace WebApplication1
          
 
             services.AddDbContext<DetaBaseCountext>(options =>options.UseSqlServer(Configuration.GetConnectionString("SQlconnection")) );
+
+            services.AddControllers();
+
+            services.AddAutoMapper(typeof(MapperInitilizer));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
