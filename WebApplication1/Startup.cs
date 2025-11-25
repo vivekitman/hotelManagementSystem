@@ -35,12 +35,15 @@ namespace WebApplication1
          
 
             services.AddDbContext<DetaBaseCountext>(options =>options.UseSqlServer(Configuration.GetConnectionString("SQlconnection")) );
+           services.AddTransient<IUnitOfWork, UnitOfWork>();
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(op =>
+                op.SerializerSettings.ReferenceLoopHandling =
+                    Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             services.AddAutoMapper(typeof(MapperInitilizer));
 
-            services.AddControllers();
+            services.AddControllers(); 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApplicat2ion1", Version = "v1" });
@@ -65,6 +68,9 @@ namespace WebApplication1
 
             app.UseEndpoints(endpoints =>
             {
+
+                
+                   endpoints.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapControllers();
             });
         }
