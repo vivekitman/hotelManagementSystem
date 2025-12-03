@@ -9,8 +9,8 @@ using WebApplication1.Data;
 namespace WebApplication1.Migrations
 {
     [DbContext(typeof(DetaBaseCountext))]
-    [Migration("20251114155259_DAtabaseCreation")]
-    partial class DAtabaseCreation
+    [Migration("20251203084746_Dec")]
+    partial class Dec
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -27,10 +27,7 @@ namespace WebApplication1.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<string>("CountryCode")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CountryName")
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ShortName")
@@ -39,6 +36,26 @@ namespace WebApplication1.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Countries");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Jamaica",
+                            ShortName = "JM"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Bahamas",
+                            ShortName = "BS"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Cayman Island",
+                            ShortName = "CI"
+                        });
                 });
 
             modelBuilder.Entity("WebApplication1.Data.Hotelcs", b =>
@@ -51,37 +68,62 @@ namespace WebApplication1.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("City")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("CountryId")
                         .HasColumnType("int");
 
-                    b.Property<string>("HotelName")
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Rating")
                         .HasColumnType("float");
-
-                    b.Property<string>("Region")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CountryId");
 
                     b.ToTable("Hotels");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "Negril",
+                            CountryId = 1,
+                            Name = "Sandals Resort and Spa",
+                            Rating = 4.5
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Address = "George Town",
+                            CountryId = 3,
+                            Name = "Comfort Suites",
+                            Rating = 4.2999999999999998
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Address = "Nassua",
+                            CountryId = 2,
+                            Name = "Grand Palldium",
+                            Rating = 4.0
+                        });
                 });
 
             modelBuilder.Entity("WebApplication1.Data.Hotelcs", b =>
                 {
-                    b.HasOne("WebApplication1.Data.Country", "CountryName")
-                        .WithMany()
+                    b.HasOne("WebApplication1.Data.Country", "Country")
+                        .WithMany("Hotels")
                         .HasForeignKey("CountryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("CountryName");
+                    b.Navigation("Country");
+                });
+
+            modelBuilder.Entity("WebApplication1.Data.Country", b =>
+                {
+                    b.Navigation("Hotels");
                 });
 #pragma warning restore 612, 618
         }

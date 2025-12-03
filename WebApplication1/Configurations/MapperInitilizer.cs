@@ -17,9 +17,11 @@ namespace WebApplication1.Configurations
              
 
             CreateMap<Hotelcs, CreateHotelDTO>().ReverseMap();
+            CreateMap<ApiUser, UserDTO>().ReverseMap();
+
         }
 
-         
+
 
     }
 }
