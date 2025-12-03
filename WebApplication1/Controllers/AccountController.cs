@@ -68,31 +68,8 @@ namespace WebApplication1.Controllers
             }
         }
 
-        [HttpPost]
-        [Route("login")]
-        public async Task<IActionResult> Login([FromBody] LoginUserDTO userDTO)
-        {
-            _logger.LogInformation($"Login Attempt for {userDTO.Email} ");
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            try
-            {
-                if (!await _authManager.ValidateUser(userDTO))
-                {
-                    return Unauthorized();
-                }
-
-                return Accepted(new { Token = await _authManager.CreateToken() });
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, $"Something Went Wrong in the {nameof(Login)}");
-                return Problem($"Something Went Wrong in the {nameof(Login)}", statusCode: 500);
-            }
+        
         }
 
     }
-}
+

@@ -38,7 +38,8 @@ namespace WebApplication1
             services.AddDbContext<DetaBaseCountext>(options =>options.UseSqlServer(Configuration.GetConnectionString("SQlconnection")) );
            services.AddTransient<IUnitOfWork, UnitOfWork>();
 
-             
+            services.AddAuthentication();
+            services.ConfigureIdentity();
 
             services.AddControllers().AddNewtonsoftJson(op =>
                 op.SerializerSettings.ReferenceLoopHandling =
